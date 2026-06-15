@@ -2,6 +2,22 @@
 
 无上限技能引擎 — Hermes Agent 五层混合路由插件。
 
+> 就像一个高级餐厅的领班：你说"我饿了"，他直接带你到最合适的桌子，不需要你把 400 道菜翻一遍。
+
+## 先看效果
+
+**我问 AI："帮我优化一下网站"**
+
+❌ 没装之前：AI 一脸懵，输出一堆不相关的废话
+✅ 装完之后：AI 秒懂，直接调用「性能优化」技能开工
+
+**我问 AI："谢谢，讲得很好"**
+
+❌ 没装之前：还在弹一堆技能选项，像推销员一样烦
+✅ 装完之后：安静回一句"不客气"，该聊天聊天
+
+---
+
 ## 架构
 
 ```
@@ -44,33 +60,23 @@ User Query
 ## 安装
 
 ```bash
-# 通过 Hermes CLI
+# 就一行命令
 hermes skills install https://github.com/wuykjl/unlimited-skills
-
-# 或手动
-git clone https://github.com/wuykjl/unlimited-skills
-cp -r unlimited-skills ~/AppData/Local/hermes/plugins/
 ```
 
-## 配置
+装完直接用。中文英文都行，它会自己学习，还会自己监控有没有变笨。
 
-.hermes/config.yaml:
+---
 
-```yaml
-plugins:
-  enabled:
-    - unlimited-skills
-```
+## 适合谁
 
-## Cron 任务
+- 每天和 AI 说"帮我写个脚本""部署一下""检查安全漏洞"的人
+- 装了 300+ 技能但不知道哪个在用、哪个没用的人
+- 不想浪费时间在"选技能"这件事上的人
 
-安装后自动注册：
+---
 
-| Cron | 时间 | 功能 |
-|------|------|------|
-| unlimited-skills-autotrain | 03:00 daily | 反馈 → 训练 |
-| unlimited-skills-drift | 04:00 daily | 漂移监控 → 告警 |
+📍 0 依赖 | 0 配置 | 装完即用
+🔗 [github.com/wuykjl/unlimited-skills](https://github.com/wuykjl/unlimited-skills)
 
-## 许可证
-
-MIT
+---
