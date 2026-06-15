@@ -1,0 +1,20 @@
+# Hermes unlimited-skills plugin manifest
+# Repository: https://github.com/wuykjl/unlimited-skills
+# Install: hermes skills install <url>
+#
+# Architecture (五层混合路由):
+#   1. Task Gate (rules + LLM)      → 是否路由
+#   2. Exact Trigger Match          → 精确命中
+#   3. Trigger Word Overlap         → 触发词重叠
+#   4. Levenshtein Fuzzy            → 拼写容差
+#   5. LLM Fallback                 → 边界兜底
+#
+# Feedback: hermes cron job (每天03:00自动训练)
+# Monitor:  hermes cron job (每天04:00漂移检测)
+
+name: unlimited-skills
+version: 1.0.0
+description: "Unlimited skill routing — 5-layer hybrid classifier (task gate + BM25 + triggers + Levenshtein + LLM fallback), bilingual CN/EN, self-training via feedback loop."
+author: wuykjl
+homepage: https://github.com/wuykjl/unlimited-skills
+enabled: true
