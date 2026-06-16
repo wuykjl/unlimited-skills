@@ -310,22 +310,27 @@ _TRIGGER_PHRASE_TO_SKILL = None
 
 def _load_triggers():
     global _TRIGGER_PHRASE_TO_SKILL
-    if _TRIGGER_PHRASE_TO_SKILL is not None:
+    if _TRIGGER_PHRASE_TO_SKILL:
         return
     _TRIGGER_PHRASE_TO_SKILL = {}
     try:
         import json as _json
         _trigger_path = os.path.join(os.path.dirname(__file__), "trigger-index.json")
+        if not os.path.isfile(_trigger_path):
+            _trigger_path = os.path.join(os.getcwd(), "trigger-index.json")
         if os.path.isfile(_trigger_path):
-            with open(_trigger_path) as _tf:
+            with open(_trigger_path, encoding="utf-8") as _tf:
                 _index = _json.load(_tf)
         else:
             _index = {}
         for _sname, _phrases in _index.items():
             for _p in _phrases:
                 _TRIGGER_PHRASE_TO_SKILL[_p.lower().strip()] = _sname
-    except Exception:
-        pass
+    except Exception as e:
+        import logging
+        logging.getLogger("unlimited_skills").warning(
+            "Failed to load trigger-index.json: %s", e
+        )
 
 
 
