@@ -91,5 +91,17 @@ Install and go. Works in Chinese and English. Learns on its own. Monitors itself
 
 ---
 
+## 致谢 · Acknowledgments
+
+本项目的技能路由能力建立在以下开源技能生态之上：
+This project's skill routing is built on the open skill ecosystems of:
+
+- [ECC (Enterprise Coding Conventions)](https://github.com/wuykjl/ecc) — 117 规则编码标准框架 / 117-rule coding standard framework
+- [Anthropic Skills](https://github.com/anthropics/skills) — 官方 Agent Skills 仓库 / Official Agent Skills repository
+- [Claude Code Plugins](https://github.com/anthropics/claude-code) — Claude Code 官方插件生态 / Claude Code official plugin ecosystem
+- 以及所有向 Hermes 生态贡献技能的个人开发者 / And all individual developers who contributed skills to the Hermes ecosystem
+
+---
+
 📍 0 依赖 | 0 配置 | 装完即用 · 0 dependencies | 0 config | install & forget
 🔗 [github.com/wuykjl/unlimited-skills](https://github.com/wuykjl/unlimited-skills)
