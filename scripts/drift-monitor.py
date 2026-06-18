@@ -2,9 +2,42 @@
 import json, os, sys, importlib.util, time
 
 train_path = os.path.expanduser("~/.hermes/.unlimited-skills-task-train.json")
-plugin_path = os.path.expanduser(
-    "~/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/unlimited_skills/plugins/hermes/__init__.py"
-)
+# Locate plugin via multiple strategies (was Bug 11: hardcoded Windows-only path)
+import glob as _glob
+plugin_path = None
+_strategies = [
+    # Strategy 1: importlib (most reliable, cross-platform)
+    lambda: importlib.util.find_spec("unlimited_skills.plugins.hermes"),
+    # Strategy 2: neuro-skill-discover local
+    lambda: importlib.util.find_spec("__init__"),
+]
+for _s in _strategies:
+    try:
+        _result = _s()
+        if _result and _result.origin and os.path.isfile(_result.origin):
+            plugin_path = _result.origin
+            break
+    except Exception:
+        pass
+
+# Strategy 3: glob-search known locations
+if not plugin_path:
+    _candidates = [
+        os.path.expanduser("~/neuro-skill-discover/__init__.py"),
+        os.path.expanduser("~/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/unlimited_skills/plugins/hermes/__init__.py"),
+        os.path.expanduser("~/.hermes/plugins/neuro-skill-router/__init__.py"),
+    ]
+    for _c in _candidates:
+        for _p in sorted(_glob.glob(_c)):
+            if os.path.isfile(_p):
+                plugin_path = _p
+                break
+        if plugin_path:
+            break
+
+if not plugin_path:
+    print("ERROR: cannot locate unlimited_skills plugin __init__.py")
+    sys.exit(1)
 
 with open(train_path) as f:
     train = json.load(f)
@@ -39,7 +72,11 @@ snapshot = {
 }
 
 drift_path = os.path.expanduser("~/.hermes/.unlimited-skills-drift-log.json")
-history = json.load(open(drift_path)) if os.path.isfile(drift_path) else []
+if os.path.isfile(drift_path):
+    with open(drift_path) as f:
+        history = json.load(f)
+else:
+    history = []
 history.append(snapshot)
 json.dump(history[-365:], open(drift_path, "w"), indent=2)
 

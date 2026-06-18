@@ -38,13 +38,18 @@ for entry in feedback:
 # Apply to trigger index
 added = 0
 for query, skill in latest.items():
+    # Build lookup keys for exact matching
+    skill_key = skill
+    skill_key_alt = skill.replace(" ", "-")
+    found = False
     for k in idx:
-        if skill in k or skill.replace(" ", "-") in k:
+        if k == skill_key or k == skill_key_alt:
             if query not in idx[k]:
                 idx[k].append(query)
                 added += 1
+            found = True
             break
-    else:
+    if not found:
         # Skill not in index — add placeholder
         idx[skill] = [query]
         added += 1
